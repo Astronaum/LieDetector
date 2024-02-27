@@ -1,0 +1,76 @@
+**1. Import statements:**
+- Necessary libraries for image processing, face/hand detection, emotion recognition, and threading are imported.
+
+**2. Declaration and Initialization:**
+- Variables like `MAX_FRAMES`, `EYE_BLINK_HEIGHT`, `TELL_MAX_TTL`, etc., are defined and initialized with appropriate values.
+- Lists and dictionaries to store information about detected faces, hands, blinks, tells, and other metrics are created.
+
+**3. `chart_setup` function:**
+- This function is responsible for setting up the chart used to visualize heart rate (BPM) data if the `--bpm` argument is provided.
+
+**4. `decrement_tells` function:**
+- This function iterates through the `tells` dictionary, decrements the `ttl` (time-to-live) of each tell entry, and removes entries with expired TTLs.
+
+**5. `main` function:**
+- Parses command-line arguments using `argparse` to handle input sources (video, camera, screen capture), drawing options, and recording options.
+- Initializes face and hand mesh detectors using `mediapipe` and sets calibration parameters.
+- Opens the video source based on the provided input.
+- Enters a loop that iterates through each video frame:
+    - Calls the `process` function to perform face and hand detection, tell detection, and visualization.
+    - Shows the processed frame with detected landmarks and tells (if enabled).
+    - Records the frame (if recording is enabled).
+    - Exits the loop upon pressing 'q'.
+- Releases the video source and recording object (if used).
+
+**6. `new_tell` function:**
+- Takes a string argument and returns a dictionary with the string as the `text` and `TELL_MAX_TTL` as the `ttl` for a new tell entry.
+
+**7. `draw_on_frame` function:**
+- Draws landmarks for detected faces and hands on the provided image using `mediapipe`'s drawing utilities.
+
+**8. `add_text` function:**
+- Adds text to the image, including mood, tells, and other information, depending on calibration and tell availability.
+
+**9. `get_aspect_ratio` function:**
+- Calculates the aspect ratio of a rectangle defined by four landmark points.
+
+**10. `get_area` function:**
+- Extracts a specific area of the image based on four landmark points and optionally draws a circle around the extracted area.
+
+**11. `get_bpm_tells` function:**
+- Calculates average BPM and detects BPM changes based on cheek color variations.
+- Updates the `tells` dictionary with average BPM and BPM change information.
+- Updates and displays the BPM chart (if enabled).
+
+**12. `is_blinking` function:**
+- Calculates eye aspect ratio using landmark points and determines if a blink is occurring based on a threshold.
+
+**13. `get_blink_tell` function:**
+- Analyzes recent blinks and adds a tell to the dictionary if a significant change in blinking frequency is detected.
+
+**14. `check_hand_on_face` function:**
+- Checks if any hand landmarks are within the face contour, indicating hand presence near the face.
+
+**15. `get_avg_gaze` function:**
+- Calculates the average gaze direction based on landmark points.
+
+**16. `get_gaze` function:**
+- Calculates the gaze direction relative to an eye's center based on landmark points.
+
+**17. `detect_gaze_change` function:**
+- Tracks historical gaze directions and adds a tell to the dictionary if a significant change in gaze direction is detected.
+
+**18. `get_lip_ratio` function:**
+- Calculates the aspect ratio of the mouth based on landmark points.
+
+**19. `get_mood` function:**
+- Uses the `fer` library to detect the emotion (mood) from the image and updates the global `mood` variable.
+
+**20. `add_truth_meter` function:**
+- Overlays a "truth meter" image on the frame scaled based on the number of active tells.
+
+**21. `get_face_relative_area` function:**
+- Calculates the relative area of the detected face in the frame.
+
+**22. `find_face_and_hands` function:**
+- Uses `mediapipe` to detect faces and hands in the provided image and returns the detected landmarks.
