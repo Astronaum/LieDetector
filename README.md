@@ -2,6 +2,8 @@ This project was developed during a group project under the supervision of a Pro
 
 Note: This project is a work-in-progress (WIP) and does not aim to be a conclusive method for lie detection.
 
+![Example Image](demo.png)
+
 Dependencies (Using python 3.7.X)
 fer==22.4.0
 ffpyplayer==4.3.5
